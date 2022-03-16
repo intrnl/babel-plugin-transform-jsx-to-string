@@ -27,14 +27,6 @@ module.exports = function (api, options) {
 	let nodes = null;
 	let isRuntimeRequired = false;
 
-	const trustedVisitor = {
-		'JSXElement|JSXFragment' (path) {
-			isRuntimeRequired = true;
-			path.replaceWith(t.callExpression(t.identifier(HTML_IDENT), [path.node]));
-			path.skip();
-		},
-	};
-
 	function expr (value) {
 		nodes.push(value);
 		nodes.push(t.stringLiteral(''));
