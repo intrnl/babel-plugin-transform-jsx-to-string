@@ -81,8 +81,9 @@ module.exports = function (api, options) {
 		if (isFragment) {
 			processChildren(path, '#fragment', true);
 
+			isRuntimeRequired = true;
 			const expr = buildNodes(nodes);
-			path.replaceWith(expr);
+			path.replaceWith(t.callExpression(t.identifier(HTML_IDENT), [expr]));
 		}
 		else {
 			processNode(path, true);
@@ -172,8 +173,9 @@ module.exports = function (api, options) {
 
 
 		if (isRoot) {
+			isRuntimeRequired = true;
 			const expr = buildNodes(nodes);
-			path.replaceWith(expr);
+			path.replaceWith(t.callExpression(t.identifier(HTML_IDENT), [expr]));
 		}
 	}
 
@@ -200,12 +202,6 @@ module.exports = function (api, options) {
 					text(escapeText(cexpr.value));
 				}
 				else {
-					isRuntimeRequired = true;
-
-					const exprPath = child.get('expression');
-					const exprScope = exprPath.scope;
-					api.traverse(cexpr, trustedVisitor, exprScope, exprPath);
-
 					expr(t.callExpression(t.identifier(TEXT_IDENT), [cexpr]));
 				}
 			}
