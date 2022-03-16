@@ -47,4 +47,4 @@ function text (value) {
 	return str;
 }
 
-export { html, escape, attr, text };
+export { TrustedHTML, html, escape, attr, text };

@@ -47,6 +47,7 @@ function text (value) {
 	return str;
 }
 
+exports.TrustedHTML = TrustedHTML;
 exports.html = html;
 exports.escape = escape;
 exports.attr = attr;
