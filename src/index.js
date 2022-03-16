@@ -113,8 +113,6 @@ module.exports = function (api, options) {
 			}
 
 			if (node.children.length > 0) {
-				isRuntimeRequired = true;
-
 				const fragment = t.jsxFragment(t.jsxOpeningFragment(), t.jsxClosingFragment(), node.children);
 				const prop = t.objectProperty(t.identifier('children'), t.callExpression(t.identifier(HTML_IDENT), [fragment]));
 
@@ -146,7 +144,6 @@ module.exports = function (api, options) {
 						text(escapeAttr(attrName, vexpr.value));
 					}
 					else {
-						isRuntimeRequired = true;
 						expr(t.callExpression(t.identifier(ATTR_IDENT), [t.stringLiteral(attrName), vexpr]));
 					}
 				}
