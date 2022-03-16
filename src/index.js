@@ -9,6 +9,7 @@ const RID = Math.random().toString(36).slice(2, 2 + 4);
 const HTML_IDENT = '$' + RID + '$html';
 const ATTR_IDENT = '$' + RID + '$attr';
 const TEXT_IDENT = '$' + RID + '$text';
+const SPREAD_ATTR_IDENT = '$' + RID + '$spread_attr';
 
 /**
  * @param {typeof babel & babel.ConfigAPI} api
@@ -22,6 +23,7 @@ module.exports = function (api, options) {
 		t.importSpecifier(t.identifier(HTML_IDENT), t.identifier('html')),
 		t.importSpecifier(t.identifier(ATTR_IDENT), t.identifier('attr')),
 		t.importSpecifier(t.identifier(TEXT_IDENT), t.identifier('text')),
+		t.importSpecifier(t.identifier(SPREAD_ATTR_IDENT), t.identifier('spread_attr')),
 	], t.stringLiteral(mod));
 
 	let nodes = null;
@@ -96,6 +98,12 @@ module.exports = function (api, options) {
 			const props = t.objectExpression([]);;
 
 			for (const attr of open.attributes) {
+				if (t.isJSXSpreadAttribute(attr)) {
+					const spread = t.spreadElement(attr.argument);
+					props.properties.push(spread);
+					continue;
+				}
+
 				const prop = t.objectProperty(t.identifier(attr.name.name), t.nullLiteral());
 				const value = attr.value;
 
@@ -132,13 +140,15 @@ module.exports = function (api, options) {
 			text(tagName);
 
 			for (const attr of open.attributes) {
+				if (t.isJSXSpreadAttribute(attr)) {
+					expr(t.callExpression(t.identifier(SPREAD_ATTR_IDENT), [attr.argument]));
+					continue;
+				}
+
 				const attrName = attr.name.name;
 				const value = attr.value;
 
-				if (t.isJSXSpreadAttribute(attr)) {
-					// this is unsupported, but we do nothing for now.
-				}
-				else if (t.isJSXExpressionContainer(value)) {
+				if (t.isJSXExpressionContainer(value)) {
 					const vexpr = value.expression;
 
 					if (t.isNullLiteral(vexpr) || (t.isIdentifier(vexpr) && vexpr.name === 'undefined')) {
