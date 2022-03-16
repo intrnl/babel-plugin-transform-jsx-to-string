@@ -1,4 +1,18 @@
-function html (value) {
+class TrustedHTML {
+	constructor (html) {
+		this.html = html;
+	}
+
+	toString () {
+		return this.html;
+	}
+}
+
+function html (html) {
+	return new TrustedHTML(html);
+}
+
+function escape (value) {
 	const str = '' + value;
 	const res = str.replace(/[&"<]/g, (char) => '&#' + char.charCodeAt(0) + ';');
 
@@ -14,7 +28,7 @@ function attr (attr, value) {
 		return ' ' + attr;
 	}
 
-	const str = html(value);
+	const str = escape(value);
 
 	return ' ' + attr + '="' + str + '"';
 }
@@ -24,12 +38,16 @@ function text (value) {
 		return '';
 	}
 
-	const str = html(value);
+	if (value instanceof TrustedHTML) {
+		return value.toString();
+	}
+
+	const str = escape(value);
 
 	return str;
 }
 
-
 exports.html = html;
+exports.escape = escape;
 exports.attr = attr;
 exports.text = text;
