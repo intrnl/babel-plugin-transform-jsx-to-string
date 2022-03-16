@@ -73,7 +73,7 @@ module.exports = function (api, options) {
 		nodes = [t.stringLiteral('')];
 
 		if (isFragment) {
-			processChildren(path, '#fragment', true);
+			processChildren(path);
 
 			isRuntimeRequired = true;
 			const expr = buildNodes(nodes);
@@ -170,7 +170,9 @@ module.exports = function (api, options) {
 				text('/>');
 			}
 			else {
-				processChildren(path, tagName, false);
+				text('>');
+				processChildren(path);
+				text('</' + tagName + '>');
 			}
 		}
 
@@ -182,11 +184,7 @@ module.exports = function (api, options) {
 		}
 	}
 
-	function processChildren (path, name, isFragment) {
-		if (!isFragment) {
-			text('>');
-		}
-
+	function processChildren (path) {
 		for (const child of path.get('children')) {
 			if (t.isJSXText(child)) {
 				const str = cleanJSXLiteral(child.node.value);
@@ -215,10 +213,6 @@ module.exports = function (api, options) {
 				// this is unsupported
 				text(escapeText('[<spread children>]'));
 			}
-		}
-
-		if (!isFragment) {
-			text('</' + name + '>');
 		}
 	}
 
