@@ -24,13 +24,13 @@ function Counter ({ count }) {
 ```
 
 ```js
-import { text as $l3h3$text } from '@intrnl/babel-plugin-transform-jsx-to-string/runtime';
+import { html as $html, text as $text } from '@intrnl/babel-plugin-transform-jsx-to-string/runtime';
 
 function App() {
-  return '<div>Hello world!</div>' + Counter({ count: 0 }) + '';
+  return $html('<div>Hello world!</div>' + $text(Counter({ count: 0 })) + '');
 }
 
 function Counter({ count }) {
-  return '<x-counter><div>count: <span x-target="x-counter.display">' + $l3h3$text(count) + '</span></div><button x-action="click:x-counter#increment">+</button><button x-action="click:x-counter#decrement">-</button></x-counter>';
+  return $html('<x-counter><div>count: <span x-target="x-counter.display">' + $text(count) + '</span></div><button x-action="click:x-counter#increment">+</button><button x-action="click:x-counter#decrement">-</button></x-counter>');
 }
 ```
