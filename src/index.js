@@ -119,7 +119,11 @@ module.exports = function (api, options) {
 				props.properties.push(prop);
 			}
 
-			expr(t.callExpression(ident, [props]));
+			expr(
+				t.callExpression(t.identifier(TEXT_IDENT), [
+					t.callExpression(ident, [props])
+				]),
+			);
 		}
 		else {
 			const tagName = getNameExpression(name).name;
