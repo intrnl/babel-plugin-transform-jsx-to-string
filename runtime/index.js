@@ -59,6 +59,16 @@ function text (value) {
 		return value.toString();
 	}
 
+	if (Array.isArray(value)) {
+		let res = '';
+
+		for (let i = 0; i < value.length; i++) {
+			res += text(value[i]);
+		}
+
+		return res;
+	}
+
 	const str = escape(value);
 
 	return str;

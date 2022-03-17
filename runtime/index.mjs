@@ -14,7 +14,7 @@ function html (html) {
 
 function escape_attr (value) {
 	const str = typeof value === 'string' ? value : ('' + value);
-	const res = str.replace(/[^_-$:a-zA-Z0-9]/g, '');
+	const res = str.replace(/[^-_$:a-zA-Z0-9]/g, '');
 
 	return res;
 }
@@ -57,6 +57,16 @@ function text (value) {
 
 	if (value instanceof TrustedHTML) {
 		return value.toString();
+	}
+
+	if (Array.isArray(value)) {
+		let res = '';
+
+		for (let i = 0; i < value.length; i++) {
+			res += text(value[i]);
+		}
+
+		return res;
 	}
 
 	const str = escape(value);
