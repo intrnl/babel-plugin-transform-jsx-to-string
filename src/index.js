@@ -120,7 +120,25 @@ module.exports = function (api, options) {
 				props.properties.push(prop);
 			}
 
-			if (node.children.length > 0) {
+			let hasChildren = false;
+
+			for (const child of node.children) {
+				if (t.isJSXText(child)) {
+					hasChildren = !!cleanJSXLiteral(child.value);
+				}
+				else if (t.isJSXEmptyExpression(child)) {
+					// do nothing
+				}
+				else {
+					hasChildren = true;
+				}
+
+				if (hasChildren) {
+					break;
+				}
+			}
+
+			if (hasChildren) {
 				const fragment = t.jsxFragment(t.jsxOpeningFragment(), t.jsxClosingFragment(), node.children);
 				const prop = t.objectProperty(t.identifier('children'), fragment);
 
