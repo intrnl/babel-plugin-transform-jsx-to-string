@@ -7,6 +7,7 @@
 	"repository": {
 		"url": "https://github.com/intrnl/babel-plugin-transform-jsx-to-string"
 	},
+	"sideEffects": false,
 	"main": "src/index.js",
 	"files": [
 		"src/",
