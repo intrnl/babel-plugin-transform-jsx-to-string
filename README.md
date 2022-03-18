@@ -34,3 +34,8 @@ function Counter({ count }) {
   return $html('<x-counter><div>count: <span x-target="x-counter.display">' + $text(count) + '</span></div><button x-action="click:x-counter#increment">+</button><button x-action="click:x-counter#decrement">-</button></x-counter>');
 }
 ```
+
+## DOM property conversion
+
+DOM/IDL properties are transformed equivalent HTML content attributes, however
+this currently does not apply to spread attributes.

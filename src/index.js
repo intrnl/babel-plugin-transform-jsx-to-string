@@ -2,6 +2,7 @@ const babel = require('@babel/core');
 const jsx = require('@babel/plugin-syntax-jsx');
 
 const { text: escapeText, attr: escapeAttr } = require('../runtime');
+const domMapping = require('./mapping');
 
 const MODULE = '@intrnl/babel-plugin-transform-jsx-to-string/runtime';
 const RID = Math.random().toString(36).slice(2, 2 + 4);
@@ -163,8 +164,12 @@ module.exports = function (api, options) {
 					continue;
 				}
 
-				const attrName = attr.name.name;
+				let attrName = attr.name.name;
 				const value = attr.value;
+
+				if (domMapping[attrName]) {
+					attrName = domMapping[attrName];
+				}
 
 				if (t.isJSXExpressionContainer(value)) {
 					const vexpr = value.expression;
