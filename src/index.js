@@ -170,6 +170,9 @@ module.exports = function (api, options) {
 				if (domMapping[attrName]) {
 					attrName = domMapping[attrName];
 				}
+				else {
+					attrName = attrName.toLowerCase();
+				}
 
 				if (t.isJSXExpressionContainer(value)) {
 					const vexpr = value.expression;

@@ -1,35 +1,10 @@
-// maps IDL attributes to HTML content attributes
-// should this be in runtime as well?
+// DOM properties that needs special mapping when converted to HTML attributes,
+// all other properties can be lowercased.
 module.exports = {
 	acceptCharset: 'accept-charset',
 	className: 'class',
 	htmlFor: 'for',
 	httpEquiv: 'http-equiv',
-
-	contentEditable: 'contenteditable',
-	spellCheck: 'spellcheck',
-
-	allowFullscreen: 'allowfullscreen',
-	autoFocus: 'autofocus',
-	autoPlay: 'autoplay',
-	disablePictureInPicture: 'disablepictureinpicture',
-	disableRemotePlayback: 'disableremoteplayback',
-	noModule: 'nomodule',
-	noValidate: 'novalidate',
-	playsInline: 'playsinline',
-	readOnly: 'readonly',
-	itemScope: 'itemscope',
-
-	rowSpan: 'rowspan',
-
-	tabIndex: 'tabindex',
-	crossOrigin: 'crossorigin',
-
-	formAction: 'formaction',
-	formEnctype: 'formenctype',
-	formMethod: 'formmethod',
-	formNoValidate: 'formnovalidate',
-	formTarget: 'formtarget',
 
   accentHeight: 'accent-height',
   alignmentBaseline: 'alignment-baseline',

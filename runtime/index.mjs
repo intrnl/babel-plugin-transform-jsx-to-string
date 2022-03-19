@@ -44,7 +44,7 @@ function spread_attr (attrs) {
 	let res = '';
 
 	for (const key in attrs) {
-		res += attr(escape_attr(key), attrs[key]);
+		res += attr(escape_attr(key.toLowerCase()), attrs[key]);
 	}
 
 	return res;
