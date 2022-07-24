@@ -19,11 +19,22 @@ function escape_attr (value) {
 	return res;
 }
 
-function escape (value) {
-	const str = typeof value === 'string' ? value : ('' + value);
-	const res = str.replace(/[&"<]/g, (char) => '&#' + char.charCodeAt(0) + ';');
+function escape (value, is_attr = false) {
+	const str = '' + value;
 
-	return res;
+	let escaped = '';
+	let last = 0;
+
+	for (let idx = 0, len = str.length; idx < len; idx++) {
+		const char = str.charCodeAt(idx);
+
+		if (char === 38 || (is_attr ? char === 34 : char === 60)) {
+			escaped += str.substring(last, idx) + ('&#' + char + ';');
+			last = idx + 1;
+		}
+	}
+
+	return escaped + str.substring(last);
 }
 
 function attr (attr, value) {
@@ -35,7 +46,7 @@ function attr (attr, value) {
 		return ' ' + attr;
 	}
 
-	const str = escape(value);
+	const str = escape(value, true);
 
 	return ' ' + attr + '="' + str + '"';
 }
@@ -69,7 +80,7 @@ function text (value) {
 		return res;
 	}
 
-	const str = escape(value);
+	const str = escape(value, false);
 
 	return str;
 }
