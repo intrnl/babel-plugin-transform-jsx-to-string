@@ -16,9 +16,9 @@
 		"README.md"
 	],
 	"dependencies": {
-		"@babel/plugin-syntax-jsx": "^7.16.7"
+		"@babel/plugin-syntax-jsx": "^7.18.6"
 	},
 	"devDependencies": {
-		"@babel/core": "^7.17.7"
+		"@babel/core": "^7.18.9"
 	}
 }
