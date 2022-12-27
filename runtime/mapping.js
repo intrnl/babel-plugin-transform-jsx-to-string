@@ -1,6 +1,36 @@
+// DOM properties that are to be treated as boolean attributes
+exports.booleans = new Set([
+  'allowfullscreen',
+  'async',
+  'autofocus',
+  'autoplay',
+  'checked',
+  'controls',
+  'default',
+  'disabled',
+  'formnovalidate',
+  'hidden',
+  'indeterminate',
+  'ismap',
+  'loop',
+  'multiple',
+  'muted',
+  'nomodule',
+  'novalidate',
+  'open',
+  'playsinline',
+  'readonly',
+  'required',
+  'reversed',
+  'seamless',
+  'selected',
+]);
+
 // DOM properties that needs special mapping when converted to HTML attributes,
 // all other properties can be lowercased.
-module.exports = {
+exports.aliases = {
+	__proto__: null,
+
 	acceptCharset: 'accept-charset',
 	className: 'class',
 	htmlFor: 'for',

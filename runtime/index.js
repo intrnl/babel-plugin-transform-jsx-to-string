@@ -1,3 +1,5 @@
+const { booleans } = require('./mapping');
+
 class TrustedHTML {
 	constructor (html) {
 		this.html = html;
@@ -10,13 +12,6 @@ class TrustedHTML {
 
 function html (html) {
 	return new TrustedHTML(html);
-}
-
-function escape_attr (value) {
-	const str = typeof value === 'string' ? value : ('' + value);
-	const res = str.replace(/[^-_$:a-zA-Z0-9]/g, '');
-
-	return res;
 }
 
 function escape (value, is_attr = false) {
@@ -42,7 +37,7 @@ function attr (attr, value) {
 		return '';
 	}
 
-	if (value === true) {
+	if (booleans.has(attr) && value) {
 		return ' ' + attr;
 	}
 
@@ -54,8 +49,15 @@ function attr (attr, value) {
 function spread_attr (attrs) {
 	let res = '';
 
-	for (const key in attrs) {
-		res += attr(escape_attr(key), attrs[key]);
+	for (let key in attrs) {
+		if (key in aliases) {
+			key = aliases[key];
+		}
+		else {
+			key = key.toLowerCase();
+		}
+
+		res += attr(key, attrs[key]);
 	}
 
 	return res;
@@ -88,7 +90,6 @@ function text (value) {
 exports.TrustedHTML = TrustedHTML;
 exports.html = html;
 exports.escape = escape;
-exports.escape_attr = escape_attr;
 exports.attr = attr;
 exports.text = text;
 exports.spread_attr = spread_attr;
