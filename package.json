@@ -5,7 +5,7 @@
 	"license": "MIT",
 	"author": "intrnl",
 	"repository": {
-		"url": "https://github.com/intrnl/babel-plugin-transform-jsx-to-string"
+		"url": "https://codeberg.org/intrnl/babel-plugin-transform-jsx-to-string"
 	},
 	"sideEffects": false,
 	"main": "src/index.js",
